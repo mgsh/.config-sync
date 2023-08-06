@@ -1,0 +1,42 @@
+# -*- mode: conf -*-
+[user]
+name = Magesh Dhasayyan
+email = mgsh@users.noreply.github.com
+
+[core]
+pager = less -nRF
+editor = nvim
+
+[alias]
+ci = commit
+co = checkout
+di = diff
+ds = diff --staged
+ol = log --pretty=oneauth
+dl = log --pretty=onedec
+ml = log --oneline --author=Magesh
+mx = log --author=Magesh
+ll = log --oneline -1 --stat
+st = status -uno
+sa = status -uall
+fp = fetch --prune
+us = reset HEAD --
+rd = rev-parse --show-toplevel
+cb = branch --show-current
+sq = merge --squash --no-commit
+lt = !bash -c 'git tag | rg "^[0-9]" | sort -rh | head -n1'
+pu = !bash -cx 'git push -u origin $(git branch --show-current)'
+pb = !bash -cx 'git push origin $(git branch --show-current)'
+pf = !bash -cx 'git push -f origin $(git branch --show-current)'
+pt = !bash -cx '[[ -z "$1" ]] && exit 1 || git tag -f "$1" && git push -f origin "$1"' -
+nb = !bash -cx '[[ -z "$1" ]] && exit 1 || git checkout -b "$1" && git push -u origin "$1"' -
+
+[push]
+default = simple
+
+[pretty]
+oneauth = %h [%aN, %cr] %s
+onedec = %h [%aN, %cr]%d %s
+
+[merge]
+defaultToUpstream = true

@@ -1,0 +1,54 @@
+format = """\
+$python\
+[$username@$hostname](green):$directory \
+$kubernetes\
+$git_branch$git_commit$git_status$git_state
+$character """
+
+[username]
+format = "$user"
+show_always = true
+# style_user = "yellow"
+
+[hostname]
+ssh_only = false
+format = '$hostname'
+# style = "yellow"
+
+[directory]
+style = "yellow"
+format = "[$path]($style)"
+truncation_length = 2
+truncation_symbol = ".../"
+
+[character]
+format = "\\$"
+
+[git_branch]
+format = "[$symbol](blue)[$branch](blue)"
+symbol = ""
+
+[git_commit]
+format = "[$tag_symbol](blue)[$tag](blue)"
+tag_symbol = "🏷 "
+tag_disabled = false
+
+[git_status]
+disabled = false
+format = '[$all_status$ahead_behind]($style)'
+style = "cyan"
+modified = "*"
+up_to_date = "="
+ahead = '>'
+behind = '<'
+diverged = "<>"
+untracked = "%"
+conflicted = "|CONFLICT"
+
+[kubernetes]
+format = '[$symbol](blue)[$context](red):[$namespace](cyan) '
+symbol = '☸'
+disabled = false
+
+[python]
+format = '[(\($virtualenv\) )]($style)'

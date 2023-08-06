@@ -1,0 +1,70 @@
+# -*- mode: shell-script -*-
+export PAGER=less
+export LESS="-ix4"
+export EDITOR=vi
+export SUDO_EDITOR=vi
+export PROMPT_DIRTRIM=2
+
+alias lh='ls -lhF'
+alias lt='ls -lhFt'
+alias lr='ls -lhFtr'
+alias cgit='git --git-dir=$HOME/.config-sync --work-tree=$HOME'
+
+[ -r ~/.local/lib/kube-ps1.sh ] && . ~/.local/lib/kube-ps1.sh
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM=auto
+export KUBE_PS1_ENABLED=on
+export KUBE_PS1_SYMBOL_DEFAULT=$'\u2388'
+export PS1=${PS1/\\$ / \$(kube_ps1)\\$ }
+export PS1=${PS1/\\$ /\$(__git_ps1 \" (\\[\\033[01;34m\\]%s\\[\\033[00m\\])\")\\n\\$ }
+export PS1="\n$PS1"
+shopt -s histappend
+shopt -s cmdhist
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+export HISTTIMEFORMAT='%F %T '
+export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND" # messes up history within a shell
+
+[ -z "$INSIDE_EMACS" ] && [ -f "${XDG_CONFIG_HOME:-$HOME/.local}"/share/fzf/key-bindings.bash ] && . "${XDG_CONFIG_HOME:-$HOME/.local}"/share/fzf/key-bindings.bash
+
+complete -C aws_completer aws
+export NSS_DEFAULT_DB_TYPE="sql" # for certutil
+
+# [ type -t __vte_prompt_command &> /dev/null ] || { [ -r /etc/profile.d/vte-2.91.sh ] && . /etc/profile.d/vte-2.91.sh; }
+
+export ANDROID_HOME="$HOME/Android/Sdk"
+for p in $ANDROID_HOME/{emulator,tools,tools/bin,platform-tools}; do
+    if [[ "$PATH" != *"$p"* ]]; then
+        export PATH="$PATH:$p"
+    fi
+done
+
+export GOPATH="$HOME/go"
+if [[ "$PATH" != *"$HOME/.local/go/bin"* ]]; then
+    export PATH="$HOME/.local/go/bin:$PATH"
+fi
+
+# kube configs, aliases and completions
+[ -r ~/.local/lib/complete_alias ] && . ~/.local/lib/complete_alias
+
+export KUBECONFIG="$(find ~/.kube/ -mindepth 1 -maxdepth 1 -name 'config-*' | head -c -1 | tr '\n' :)"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+alias k='kubectl'
+alias kctx='kubectl ctx'
+alias kns='kubectl ns'
+
+# requires complete_alias to be installed
+complete -F _complete_alias k
+
+# gcp k8s access
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+case "$TERM" in
+alacritty | xterm-color | *-256color)
+    eval "$(starship init bash)"
+    ;;
+esac
