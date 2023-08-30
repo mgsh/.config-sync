@@ -15,3 +15,5 @@ bind-key -n C-PageUp previous-window
 bind-key -n C-PageDown next-window
 
 bind-key : command-prompt
+bind-key -n F6 detach
+bind-key -n F7 copy-mode

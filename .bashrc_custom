@@ -1,8 +1,8 @@
 # -*- mode: shell-script -*-
 export PAGER=less
 export LESS="-ix4"
-export EDITOR=vi
-export SUDO_EDITOR=vi
+export EDITOR="$(which nvim)"
+export SUDO_EDITOR="$(which nvim)"
 export PROMPT_DIRTRIM=2
 
 alias lh='ls -lhF'
