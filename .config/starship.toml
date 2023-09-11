@@ -25,12 +25,15 @@ truncation_symbol = ".../"
 format = "\\$"
 
 [git_branch]
-format = "[$symbol](blue)[$branch](blue)"
+format = "[$symbol$branch]($style)"
+style = "blue"
 symbol = ""
 
 [git_commit]
-format = "[$tag_symbol](blue)[$tag](blue)"
-tag_symbol = "🏷 "
+# format = "[$tag_symbol](blue)[$tag](blue)"
+format = "[$hash$tag]($style)"
+style = "blue"
+tag_symbol = " 🏷 "
 tag_disabled = false
 
 [git_status]
