@@ -1,6 +1,6 @@
 #!/bin/bash
 
-logger -i -t "10-redshift-notify.sh" "$(env | grep -w -e PATH -e XDG_RUNTIME_DIR)"
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 case $1 in
 period-changed)
     logger -i -t "10-redshift-notify.sh" "Redshift: Period changed from $2 to $3"
